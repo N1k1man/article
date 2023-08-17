@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{% url 'create_article' %}">Создать статью</a>
+  </li>
+{% endblock %}
+
+{% block content %}
+<!-- <a href="articles/add">Добавить статью</a> -->
+<h1>Статьи</h1>
+{% for article in articles %}
+<h3>{{ article.title }}</h3><span>{{ article.get_status_display }}</span>
+<p><a href="article/{{ article.pk }}/">Подробнее</a></p>
+
+{% endfor %}
+{% endblock %}

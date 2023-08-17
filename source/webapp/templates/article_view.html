@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Модерирование{% endblock %}
+{% block nav %}
+<li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="{% url 'create_article' %}">Создать статью</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Редактировать</a>
+  </li><li class="nav-item">
+    <a class="nav-link active" aria-current="page" href="#">Удалить</a>
+  </li>
+{% endblock %}
+{% block content %}
+  <h1 style="display: inline-block;">{{ article.title }}</h1>
+  <p style="display: inline-block;">{{ article.created_at|date:'Y-m-d G:i' }}</p>
+  <h3>{{ article.author }}</h3>
+  <p>{{ article.content }}</p>
+  <a href="{% url 'index' %}">На главную</a>
+  {% endblock %}
+    
+

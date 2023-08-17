@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Создание статьи{% endblock %}
+
+
+{% block content %}
+<h1>Create Article</h1>
+<form action="{% url 'create_article' %}" method="post">
+    {% csrf_token %}
+    <label>Status:</label>
+    <br>
+    <select name="status">
+        {% for value, status in statuses %}
+        <option value="{{ value }}">{{ status }}</option>
+        {{ status }}
+        {% endfor %}
+    </select>
+    <br>
+    <label>Title:</label><br />
+    <input type="text" name="title" /><br />
+    <label>Text:</label><br />
+    <textarea name="content"></textarea><br />
+    <label>Author:</label><br />
+    <input type="text" name="author" /><br />
+    <br />
+    <input type="submit" value="Send" />
+</form>
+<a href="{% url 'index' %}">На главную</a>
+{% endblock %}
