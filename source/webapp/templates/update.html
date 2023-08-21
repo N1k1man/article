@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Редактирование статьи{% endblock %}
+
+
+{% block content %}
+<h1>Edit article</h1>
+<form action="" method="post">
+{% include 'partial/form.html' with button_text='Редактировать' %}
+</form>
+<a href="{% url 'index' %}">На главную</a>
+{% endblock %}

@@ -3,20 +3,43 @@
 {% block title %}Модерирование{% endblock %}
 {% block nav %}
 <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="{% url 'create_article' %}">Создать статью</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Редактировать</a>
-  </li><li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="#">Удалить</a>
-  </li>
+  <a class="nav-link active" aria-current="page" href="{% url 'create_article' %}">Создать статью</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link active" aria-current="page" href="{% url 'update' article.pk %}">Редактировать</a>
+</li>
+<li class="nav-item">
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteArticleModal">
+    Удалить
+  </button>
+</li>
 {% endblock %}
 {% block content %}
-  <h1 style="display: inline-block;">{{ article.title }}</h1>
-  <p style="display: inline-block;">{{ article.created_at|date:'Y-m-d G:i' }}</p>
-  <h3>{{ article.author }}</h3>
-  <p>{{ article.content }}</p>
-  <a href="{% url 'index' %}">На главную</a>
-  {% endblock %}
-    
+<h1 style="display: inline-block;">{{ article.title }}</h1>
+<p style="display: inline-block;">{{ article.created_at|date:'Y-m-d G:i' }}</p>
+<h3>{{ article.author }}</h3>
+<p>{{ article.content }}</p>
+<a href="{% url 'index' %}">На главную</a>
+<div class="modal fade" id="deleteArticleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteArticleModal">Удаление</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Удалить статью: {{ article.title }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+        <form action="{% url 'delete' article.pk %}" method="post">
+          {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Да</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
 
