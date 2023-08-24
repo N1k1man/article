@@ -19,6 +19,7 @@
 <p style="display: inline-block;">{{ article.created_at|date:'Y-m-d G:i' }}</p>
 <h3>{{ article.author }}</h3>
 <p>{{ article.content }}</p>
+<p>Дата публикации: {{ article.publish_date|default:'Не указана' }}</p>
 <a href="{% url 'index' %}">На главную</a>
 <div class="modal fade" id="deleteArticleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">

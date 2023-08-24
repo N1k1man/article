@@ -1,26 +1,33 @@
-{% csrf_token %}
-<br>
-<label>Title:</label><br />
-{% if not errors.title %}
-<input type="text" name="title" value="{{ article.title }}" /><br />
-{% else %}
-<input  class="border border-danger border-4" type="text" name="title" value="{{ article.title }}" /><br />
-<p class="text-danger">{{ errors.title }}</p>
-{% endif %}
+<!-- {% csrf_token %} -->
 
-<label>Text:</label><br />
-{% if not errors.content %}
-<textarea type="text" name="content">{{ article.content }}</textarea><br />
-{% else %}
-<textarea  class="border border-danger border-4" type="text" name="content">{{ article.content }}</textarea> <br />
-<p class="text-danger">{{ errors.content }}</p>
-{% endif %}
-<label>Author:</label><br />
-{% if not errors.author %}
-<input type="text" name="author" value="{{ article.author }}" /><br />
-{% else %}
-<input  class="border border-danger border-4" type="text" name="author" value="{{ article.author }}" /><br />
-<p class="text-danger">{{ errors.author }}</p>
-{% endif %}
-<br />
-<input type="submit" value="{{ button_text }}" />
+
+<!-- <div class="text-danger">
+<p><label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label></p>
+{% for error in form.title.errors %} 
+<p>{{ error }}</p>
+{% endfor %}
+
+<p>{{ form.title }}</p>
+
+<p><label for="{{ form.author.id_for_label }}">{{ form.author.label }}</label></p>
+{% for error in form.author.errors %}
+<p>{{ error }}</p>
+{% endfor %}
+<p>{{ form.author }}</p>
+<p><label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label></p>
+{% for error in form.content.errors %} <p class="text-danger">{{ error }}</p>
+{% endfor %}
+<p>{{ form.content }}</p>
+<p><input type="submit" value="{{ button_text }}"></p>
+</div> -->
+
+
+{% csrf_token %}
+{% for field in form %}
+<p><label for="{{ field.id_for_label }}">{{ field.label }}</label></p>
+{% for error in field.errors %}
+<p class="form-error">{{ error }}</p>
+{% endfor %}
+<p>{{ field }}</p>
+{% endfor %}
+<p><input type="submit" value="{{ button_text }}"></p>

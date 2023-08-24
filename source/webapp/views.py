@@ -3,6 +3,7 @@ from webapp.models import Article, STATUS_CHOICES
 from django.http import HttpResponseRedirect, HttpResponseNotFound, Http404
 from django.urls import reverse
 from webapp.validate import article_validate
+from webapp.forms import ArticleForm
 
 
 
@@ -18,21 +19,25 @@ def article_view(request, pk):
 
 def create_article(request):
     if request.method == 'GET':
+        form = ArticleForm()
         
-        return render(request, 'create.html')
+        return render(request, 'create.html', {'form':form})
     
     else:
-
-        title = request.POST.get('title')
-        author = request.POST.get('author')
-        content = request.POST.get('content')
-        new_article = Article(title=title, author=author, content=content)    
-        errors =  article_validate(title, author, content)
+        form = ArticleForm(data=request.POST)
+        if form.is_valid():
+            title = form.cleaned_data.get('title')
+            author = form.cleaned_data.get('author')
+            content = form.cleaned_data.get('content')
+            status = form.cleaned_data.get('status')
+            publish_date = form.cleaned_data.get('publish_date', None)
+            new_article = Article.objects.create(title=title, author=author, content=content, status=status, publish_date=publish_date)    
+            return redirect('article_view', pk=new_article.pk)
         
-        if errors:
-            return render(request, 'create.html', {'errors':errors, 'article':new_article})
-        new_article.save()
-        return redirect('article_view', pk=new_article.pk)
+        
+        return render(request, 'create.html', {'form':form})
+        
+        
         
 
 def update_article(request, pk):
